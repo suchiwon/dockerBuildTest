@@ -1,0 +1,23 @@
+FROM ubuntu:latest
+
+# copy shell script
+COPY ./install.sh /
+COPY ./test.sh /
+
+RUN chmod 755 /install.sh
+RUN chmod 755 /test.sh
+
+RUN /install.sh
+
+# Define mountable directories.
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+
+# Define working directory.
+WORKDIR /
+
+# Define default command.
+CMD /test.sh
+
+# Expose ports.
+EXPOSE 80
+EXPOSE 443
